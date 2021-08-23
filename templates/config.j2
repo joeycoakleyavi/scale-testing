@@ -32,8 +32,8 @@ avi_config:
         enabled: true
         ipam_network_subnet:
         subnet:
-            mask: 24
-            ip_addr:
+          mask: 24
+          ip_addr:
             type: V4
             addr: "{{ region_subnet }}"
         network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
