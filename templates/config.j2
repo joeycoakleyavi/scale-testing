@@ -1,13 +1,6 @@
 #jinja2: lstrip_blocks: True
 ---
 avi_config:
-  pool:
-    - name: "ScaleTest-Pool"
-      lb_algorithm: LB_ALGORITHM_ROUND_ROBIN
-      health_monitor_refs: '/api/healthmonitor?name=System-HTTP'
-      servers: "{{ pool_servers }}"
-      cloud_ref: '/api/cloud?name={{ cloud_name }}'
-
   vsvip:
   {% for num in range(1, num_vs) %}
     - name: "{{ 'vsvip_app' + num | string + region }}"
@@ -45,7 +38,7 @@ avi_config:
   virtualservice:
     - name: "{{ 'vs' + num | string }}"
       cloud_ref: '/api/cloud?name=Default-Cloud'
-      pool_ref: '/api/pool?name=ScaleTest-Pool'
+      pool_ref: '/api/pool?name={{ pool_name }}'
       application_profile_ref: '/api/applicationprofile?name=System-HTTP'
       services:
         - port: 80

@@ -1,5 +1,6 @@
 ---
 num_vs: 10
 cloud_name: Default-Cloud
+pool_name: demo-vs-01a-pool
 region_subnet: 192.168.130.0/24
 region: a
