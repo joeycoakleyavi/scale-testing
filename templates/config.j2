@@ -40,6 +40,8 @@ avi_config:
           auto_allocate_floating_ip: true
           avi_allocated_vip: false
           auto_allocate_ip_type: V4_ONLY
+  {% endfor %}
+  {% for num in range(1, num_vs) %}
   virtualservice:
     - name: "{{ 'vs' + num | string }}"
       cloud_ref: '/api/cloud?name=Default-Cloud'
@@ -60,4 +62,4 @@ avi_config:
       significant_log_throttle: 10
       client_insights: NO_INSIGHTS
       all_headers: true
-  {% endfor %}
+    {% endfor %}
