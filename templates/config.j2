@@ -43,16 +43,4 @@ avi_config:
       services:
         - port: 80
       vsvip_ref: /api/vsvip?name={{ 'vsvip_app' + num | string + region }}
-      analytics_policy:
-      udf_log_throttle: 10
-      full_client_logs:
-        duration: 0
-        throttle: 10
-        enabled: true
-      metrics_realtime_update:
-        duration: 0
-        enabled: false
-      significant_log_throttle: 10
-      client_insights: NO_INSIGHTS
-      all_headers: true
     {% endfor %}
