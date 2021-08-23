@@ -25,7 +25,7 @@ avi_config:
         discovered_networks:
         - subnet:
             - mask: 24
-                ip_addr:
+              ip_addr:
                 type: V4
                 addr: "{{ region_subnet }}"
             network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
