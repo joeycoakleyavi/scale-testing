@@ -14,9 +14,9 @@
         dest: ./config.yml
       delegate_to: localhost
 
-    # - name: Deploy Config
-    #   import_role:
-    #     name: aviconfig
-    #   vars:
-    #     avi_config_file: "{{ root_directory }}/applications/{{ app_name }}/config.yml"
-    #     avi_creds_file: "{{ root_directory }}/sites/{{ site }}/creds.yml"
+    - name: Deploy Config
+      import_role:
+        name: aviconfig
+      vars:
+        avi_config_file: "config.yml"
+        avi_creds_file: "creds.yml"
