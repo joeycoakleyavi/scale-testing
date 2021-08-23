@@ -1,0 +1,22 @@
+---
+- name: Scale Testing
+  hosts: localhost
+  gather_facts: no
+  roles:
+    - role: "avinetworks.avisdk"
+  vars_files:
+    - vars.yml
+  
+  tasks:
+    - name: Create Config
+      template:
+        src: templates/config.j2
+        dest: ./config.yml
+      delegate_to: localhost
+
+    # - name: Deploy Config
+    #   import_role:
+    #     name: aviconfig
+    #   vars:
+    #     avi_config_file: "{{ root_directory }}/applications/{{ app_name }}/config.yml"
+    #     avi_creds_file: "{{ root_directory }}/sites/{{ site }}/creds.yml"

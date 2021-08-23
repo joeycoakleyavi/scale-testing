@@ -1,0 +1,460 @@
+---
+avi_config:
+  pool:
+    - name: "ScaleTest-Pool"
+      lb_algorithm: LB_ALGORITHM_ROUND_ROBIN
+      health_monitor_refs: '/api/healthmonitor?name=System-HTTP'
+      servers: "[{'ip': {'addr': '1.1.1.1', 'type': 'V4'}}, {'ip': {'addr': '1.1.1.2', 'type': 'V4'}}]"
+      cloud_ref: '/api/cloud?name=AWS'
+
+  vsvip:
+    - name: "vsvip_app1a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app1a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 1
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs1"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app1a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app2a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app2a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 2
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs2"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app2a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app3a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app3a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 3
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs3"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app3a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app4a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app4a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 4
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs4"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app4a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app5a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app5a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 5
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs5"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app5a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app6a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app6a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 6
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs6"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app6a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app7a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app7a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 7
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs7"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app7a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app8a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app8a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 8
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs8"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app8a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
+    - name: "vsvip_app9a"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      dns_info:
+      - num_records_in_response: 1
+          type: DNS_RECORD_A
+          fqdn: "app9a.region01a.corp.local"
+          algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
+          ttl: 30
+      vip:
+      - auto_allocate_ip: true
+          vip_id: 9
+          avi_allocated_fip: false
+          discovered_networks:
+          - subnet:
+              - mask: 24
+                  ip_addr:
+                  type: V4
+                  addr: "192.168.130.0/24"
+              network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          enabled: true
+          ipam_network_subnet:
+          subnet:
+              mask: 24
+              ip_addr:
+              type: V4
+              addr: "192.168.130.0/24"
+          network_ref: "/api/network?name=VIP-RegionA01-vDS-COMP"
+          auto_allocate_floating_ip: true
+          avi_allocated_vip: false
+          auto_allocate_ip_type: V4_ONLY
+  virtualservice:
+    - name: "vs9"
+      cloud_ref: '/api/cloud?name=Default-Cloud'
+      pool_ref: /api/pool?name=ScaleTest-Pool
+      application_profile_ref: '/api/applicationprofile?name=System-HTTP'
+      services:
+      - port: 80
+      vsvip_ref: /api/vsvip?name=vsvip_app9a
+      analytics_policy:
+      udf_log_throttle: 10
+      full_client_logs:
+          duration: 0
+          throttle: 10
+          enabled: true
+      metrics_realtime_update:
+          duration: 0
+          enabled: false
+      significant_log_throttle: 10
+      client_insights: NO_INSIGHTS
+      all_headers: true
