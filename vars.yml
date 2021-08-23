@@ -1,11 +1,4 @@
 ---
-avi_credentials:
-  controller: "{{ ansible_host }}"
-  username: admin
-  password: Avi123!@#
-  api_version: 20.1.4
-ansible_python_interpreter: "{{ ansible_playbook_python }}"
-
 num_vs: 10
 cloud_name: AWS
 region_subnet: 192.168.130.0/24
