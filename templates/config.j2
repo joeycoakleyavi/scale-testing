@@ -13,7 +13,7 @@ avi_config:
     - name: "{{ 'vsvip_app' + num | string + region }}"
       cloud_ref: '/api/cloud?name=Default-Cloud'
       dns_info:
-      - num_records_in_response: 1
+        - num_records_in_response: 1
           type: DNS_RECORD_A
           fqdn: "{{ 'app' + num | string + region | lower +'.region01' + region | lower + '.corp.local' }}"
           algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
