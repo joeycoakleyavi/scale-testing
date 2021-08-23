@@ -16,7 +16,7 @@
 
     - name: Deploy Config
       import_role:
-        name: aviconfig
+        name: avinetworks.aviconfig
       vars:
         avi_config_file: "config.yml"
         avi_creds_file: "creds.yml"
