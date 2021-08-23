@@ -43,4 +43,5 @@ avi_config:
       services:
         - port: 80
       vsvip_ref: /api/vsvip?name={{ 'vsvip_app' + num | string + region }}
+      se_group_ref: /api/serviceenginegroup?name={{ seg_name }}
   {% endfor %}
