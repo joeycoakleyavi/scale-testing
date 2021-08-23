@@ -1,12 +1,5 @@
 ---
 num_vs: 10
-cloud_name: AWS
+cloud_name: Default-Cloud
 region_subnet: 192.168.130.0/24
-pool_servers:
-  - ip:
-      addr: 1.1.1.1
-      type: V4
-  - ip:
-      addr: 1.1.1.2
-      type: V4
 region: a
