@@ -24,11 +24,11 @@ avi_config:
         network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
         enabled: true
         ipam_network_subnet:
-        subnet:
-          mask: 24
-          ip_addr:
-            type: V4
-            addr: "{{ region_subnet }}"
+          subnet:
+            mask: 24
+            ip_addr:
+              type: V4
+              addr: "{{ region_subnet }}"
           network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
         auto_allocate_floating_ip: true
         avi_allocated_vip: false
