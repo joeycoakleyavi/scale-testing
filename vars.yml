@@ -1,7 +1,11 @@
 ---
-num_vs: 200
+num_vs: 150
 cloud_name: Default-Cloud
-pool_name: demo-vs-01a-pool
-region_subnet: 192.168.130.0
-region: a
-seg_name: gslb01a
+pool_name: Web-Physical-pool
+vip_subnet: 192.168.0.0
+vip_mask: 24
+vip_network_name: Management
+domain: homelab.local
+seg_name: Physical-Host
+ansible_python_interpreter: "{{ ansible_playbook_python }}"
+avi_config_state: absent #absent or present

@@ -3,12 +3,12 @@
 avi_config:
   vsvip:
   {% for num in range(1, num_vs) %}
-    - name: "{{ 'vsvip_app' + num | string + region }}"
+    - name: "{{ 'vsvip_app' + num | string }}"
       cloud_ref: '/api/cloud?name=Default-Cloud'
       dns_info:
         - num_records_in_response: 1
           type: DNS_RECORD_A
-          fqdn: "{{ 'app' + num | string + region | lower +'.region01' + region | lower + '.corp.local' }}"
+          fqdn: "{{ num | string + '.' + domain }}"
           algorithm: DNS_RECORD_RESPONSE_CONSISTENT_HASH
           ttl: 30
       vip:
@@ -17,19 +17,19 @@ avi_config:
         avi_allocated_fip: false
         discovered_networks:
         - subnet:
-            - mask: 24
+            - mask: {{ vip_mask }}
               ip_addr:
                 type: V4
-                addr: "{{ region_subnet }}"
-          network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
+                addr: "{{ vip_subnet }}"
+          network_ref: "{{ '/api/network?name=' + vip_network_name }}"
         enabled: true
         ipam_network_subnet:
           subnet:
-            mask: 24
+            mask: {{ vip_mask }}
             ip_addr:
               type: V4
-              addr: "{{ region_subnet }}"
-          network_ref: "{{ '/api/network?name=VIP-Region' + region | upper +'01-vDS-COMP' }}"
+              addr: {{ vip_subnet }}
+          network_ref: "{{ '/api/network?name=' + vip_network_name }}"
         auto_allocate_floating_ip: true
         avi_allocated_vip: false
         auto_allocate_ip_type: V4_ONLY
@@ -37,11 +37,11 @@ avi_config:
   virtualservice:
   {% for num in range(1, num_vs) %}
     - name: "{{ 'vs' + num | string }}"
-      cloud_ref: '/api/cloud?name=Default-Cloud'
+      cloud_ref: "{{ '/api/cloud?name=' + cloud_name }}"
       pool_ref: '/api/pool?name={{ pool_name }}'
       application_profile_ref: '/api/applicationprofile?name=System-HTTP'
       services:
         - port: 80
-      vsvip_ref: /api/vsvip?name={{ 'vsvip_app' + num | string + region }}
+      vsvip_ref: /api/vsvip?name={{ 'vsvip_app' + num | string }}
       se_group_ref: /api/serviceenginegroup?name={{ seg_name }}
   {% endfor %}
